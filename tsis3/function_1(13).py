@@ -5,7 +5,7 @@ def spy_game(l):
         if num == 0 or num == 7 :
             s.append(str(num))
     k = "".join(s)
-    if "007" == k:
+    if "007" in k:
         print("True")
     else:
         print("False")

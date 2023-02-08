@@ -1,29 +1,29 @@
-#1
-
-class UpperLetter:
-
-    def getString(self, text):
-        return text
-    def printString(self, text):
-        print(self.getString(text).upper())
-
-som = UpperLetter()
-som.printString(som.getString(input()))
-
-#2
+# #1
+#
+# class UpperLetter:
+#
+#     def getString(self, text):
+#         return text
+#     def printString(self, text):
+#         print(self.getString(text).upper())
+#
+# som = UpperLetter()
+# som.printString(som.getString(input()))
+#
+# #2
 
 class Square:
-    def __init__(self, length, width):
+    def __init__(self, length):
         self.length = length
-        self.width = width
+
 
 
 class Shape(Square):
     def __init__(self, length, width):
-        super().__init__(length, width)
+        super().__init__(length)
 
-    def area(self, length, *width):
-        print(self.length * self.width)
+    def area(self, length):
+        return self.length * 0
 
 squa = Shape(int(input()), 0)
 squa.area(squa)

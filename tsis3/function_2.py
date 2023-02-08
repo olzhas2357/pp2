@@ -88,7 +88,7 @@ if __name__ == "__main__":
     rating(s)
 
 
-def rating():
+def rating(movies):
     l = []
     for i in range(len(movies)):
         if movies[i]["imdb"] >= 5.5:
@@ -108,9 +108,10 @@ if __name__ == "__main__":
     print(rating(r))
 
 def rating():
+    sum = 0
     l = len(movies)
     for i in range(l):
-        sum(movies[i]["imdb"])
+        sum += movies[i]["imdb"]
     ave_sc = sum / l
     return ave_sc
 if __name__ == "__main__":
