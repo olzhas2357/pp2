@@ -34,10 +34,12 @@ while True:
     screen.blit(picture, picture_rect)
 
     for event in pygame.event.get():
-        if event.type == pygame.QUIT or event.type == pygame.KEYDOWN:
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w:
                 pygame.quit()
-                exit()
 
     t = datetime.now()
     minute, second = t.minute, t.second
