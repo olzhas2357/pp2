@@ -22,16 +22,13 @@ PINK = (196, 35, 159)
 list_1 = [WHITE, RED, GREEN, BLUE, PINK]
 
 
-def circle():
-    pygame.draw.circle(screen, WHITE, center=(450, 350), radius=42, width=5)
-def rect():
-    x, y = 50, 50
-    pygame.draw.rect(screen, WHITE, rect=(100, 400, x, y), width = 5)
+
 def draw():
     x = 15
     w = 85
     for i in range(5):
         pygame.draw.rect(screen, list_1[i], (x + 100*i, x, w, w))
+    pygame.draw.rect(screen, WHITE, (515, 15, w, w), width = 5)
     pygame.draw.circle(screen, WHITE, center = (657, 57), radius = 42, width = 5)
 draw()
 
@@ -44,14 +41,14 @@ def roundline(canvas, color, start, end, radius=1) :
         y = int(start[1] + float(i) / dist * Yaxis)
         pygame.draw.circle(canvas, color, (x, y), radius)
 
-# def roundRect(canvas, color, start, end, radius=1) :
-#     Xaxis = end[0] - start[0]
-#     Yaxis = end[1] - start[1]
-#     dist = max(abs(Xaxis), abs(Yaxis))
-#     for i in range(dist) :
-#         x = int(start[0] + float(i) / dist * Xaxis)
-#         y = int(start[1] + float(i) / dist * Yaxis)
-#         pygame.draw.rect(canvas, color, pygame.Rect(start[0], start[1], x, y), width = radius)
+def roundRect(canvas, color, start, end, radius=1) :
+    Xaxis = end[0] - start[0]
+    Yaxis = end[1] - start[1]
+    dist = max(abs(Xaxis), abs(Yaxis))
+    for i in range(dist) :
+        x = int(start[0] + float(i) / dist * Xaxis)
+        y = int(start[1] + float(i) / dist * Yaxis)
+        pygame.draw.rect(canvas, color, pygame.Rect(start[0], start[1], x, y), width = radius)
 
 mouse = pygame.mouse.get_pos()
 color = list_1[0]
@@ -78,10 +75,7 @@ try:
                     radius +=2
                 elif e.key == pygame.K_DOWN:
                     radius-=2
-                elif e.key == pygame.K_o:
-                    circle()
-                elif e.key == pygame.K_s:
-                    rect()
+
 
             if e.type == pygame.MOUSEBUTTONDOWN :
                 # Draw a single circle when even mouse is clicked down.
@@ -93,6 +87,7 @@ try:
             # It will draw a continuous circle with the help of roundline function.
             if e.type == pygame.MOUSEMOTION :
                 if draw_on :
+
                     pygame.draw.circle(screen, color, e.pos, radius)
                     roundline(screen, color, e.pos, last_pos, radius)
                 last_pos = e.pos
