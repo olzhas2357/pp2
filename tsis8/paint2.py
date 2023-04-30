@@ -19,7 +19,6 @@ class GameObject:
     def handle(self, mouse_pos):
         raise NotImplementedError
 
-
 class Button:
     def __init__(self):
         self.rect = pygame.draw.rect(
@@ -36,23 +35,6 @@ class Button:
             (WIDTH // 2 - 20, 20, 40, 40),
             width = 5
         )
-
-# class Button2:
-#     def __init__(self):
-#         for i in range(5):
-#             self.rect = pygame.draw.rect(
-#                 SCREEN,
-#                 list_1[i],
-#                 (20 + i * 60, 20, 40, 40),
-#             )
-#     def draw(self):
-#         for i in range(5):
-#             self.rect = pygame.draw.rect(
-#                 SCREEN,
-#                 list_1[i],
-#                 (20 + i * 60, 20, 40, 40),
-#             )
-
 
 class Pen(GameObject):
     def __init__(self, *args, **kwargs):
@@ -71,6 +53,26 @@ class Pen(GameObject):
         self.points.append(mouse_pos)
 
 
+class Circle(GameObject):
+    def __init__(self, center, radius):
+        self.center = center
+        self.radius = radius
+        self.start_pos = None
+        self.end_pos = None
+
+    def draw(self):
+        pygame.draw.circle(
+            SCREEN,
+            list_1[0],
+            self.center,
+            self.radius,
+            width=5
+        )
+
+    def handle(self, mouse_pos):
+        self.radius = max(abs(mouse_pos[0] - self.center[0]),
+                          abs(mouse_pos[1] - self.center[1]))
+
 class Rectangle(GameObject):
     def __init__(self, start_pos):
         self.start_pos = start_pos  # (x1, y1)
@@ -79,10 +81,8 @@ class Rectangle(GameObject):
     def draw(self):
         start_pos_x = min(self.start_pos[0], self.end_pos[0])
         start_pos_y = min(self.start_pos[1], self.end_pos[1])
-
         end_pos_x = max(self.start_pos[0], self.end_pos[0])
         end_pos_y = max(self.start_pos[1], self.end_pos[1])
-
         pygame.draw.rect(
             SCREEN,
             list_1[0],
@@ -103,12 +103,7 @@ def main():
     clock = pygame.time.Clock()
     active_obj = None
     button = Button()
-    # button_color = Button2()
-    objects = [
-        button,
-        # button_color
-    ]
-    # current_shape = 'pen'
+    objects = [button, ]
     current_shape = Pen
 
     while running:
@@ -117,27 +112,20 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
             if event.type == pygame.MOUSEBUTTONDOWN:
-
                 if button.rect.collidepoint(event.pos):
                     current_shape = Rectangle
-                # elif button_color.collidepoint(event.pos):
-                #     print("wow")
                 else:
                     active_obj = current_shape(start_pos=event.pos)
 
             if event.type == pygame.MOUSEMOTION and active_obj is not None:
                 active_obj.handle(pygame.mouse.get_pos())
-                active_obj.draw()
-
             if event.type == pygame.MOUSEBUTTONUP and active_obj is not None:
                 objects.append(active_obj)
                 active_obj = None
 
         for obj in objects:
             obj.draw()
-
         clock.tick(30)
         pygame.display.flip()
 
